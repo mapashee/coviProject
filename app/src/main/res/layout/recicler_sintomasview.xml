@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <CheckBox android:id="@+id/cradio_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sin1"
+        android:layout_marginRight="10dp"
+        android:padding="16dp"
+        android:button="@android:color/transparent"
+        android:drawableStart="@drawable/ic_sick"
+        android:textAlignment="center"
+        android:drawableTint="@color/sintoma_texticon_selector"
+        android:background="@drawable/sintoma_background_selector"
+        android:textColor="@color/sintoma_texticon_selector"
+        android:textSize="16dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</LinearLayout>
+

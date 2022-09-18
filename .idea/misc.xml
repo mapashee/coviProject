@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/drawable/btn_personalizado1.xml" value="0.169" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/drawable/sintoma_background_selector.xml" value="0.1" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/drawable/sintoma_textandicon_selector.xml" value="0.169" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/drawable/sintomas_checked.xml" value="0.166" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/drawable/sintomas_unchecked.xml" value="0.1665" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_configuracion.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_cuestionariouno.xml" value="0.2" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_estadistica.xml" value="0.20199275362318841" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_multiselect1.xml" value="0.18206521739130435" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_principal.xml" value="0.19746376811594202" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/activity_sintomasreg.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/popuppass.xml" value="0.1816123188405797" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/popupuser.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/recicler_sintomasview.xml" value="0.19746376811594202" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/layout/sintomasreglist.xml" value="0.13524590163934427" />
+        <entry key="..\:/Users/eirg1/AndroidStudioProjects/COVIproyecto/app/src/main/res/menu/menu.xml" value="0.21354166666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

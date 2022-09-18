@@ -1,0 +1,83 @@
+<resources>
+
+
+    <string name="app_name">COVIproyecto</string>
+
+    <string name="Login">Login</string>
+    <string name="Login_usertv">Usuario:</string>
+    <string name="Login_userev">Ingrese su usuario</string>
+    <string name="Login_conttv">Contraseña:</string>
+    <string name="Login_contconf">Confirme su contraseña:</string>
+    <string name="Login_contev">Ingrese su contraseña</string>
+    <string name="Login_button">Ingresar</string>
+
+    <string name="Registro">Registro</string>
+    <string name="Reg_button">Completar el Cuestionario</string>
+    <string name="rb_user1">Tengo Covid</string>
+    <string name="rb_user2">Tuve Covid</string>
+
+    <string name="reg_et0">Cuestionario </string>
+    <string name="reg_et1">Sexo: </string>
+    <string name="reg_et2">Edad: </string>
+    <string name="reg_et3">Peso: </string>
+    <string name="reg_et4">Enfermedades: </string>
+    <string name="reg_et5">Discapacidad: </string>
+    <string name="reg_et6">Vacunación: </string>
+    <string name="reg_et6.1">Vacunación refuerzo: </string>
+    <string name="reg_et7.1">Fecha desde que sabe que tiene covid: </string>
+    <string name="reg_et7.2">Fecha desde que sabe que ya no tiene covid: </string>
+    <string name="reg_et8.1">Vairante de covid que tiene: </string>
+    <string name="reg_et8.2">Variante de covid que tuvo: </string>
+    <string name="reg_et9">Numero de dosis aplicadas en Total: </string>
+    <string name="reg_et10">Variante covid: </string>
+    <string name="reg_et11">Cuenta con completa movilidad de su cuerpo? </string>
+
+    <string name="popup1">Ingrese el nuevo nombre de usuario </string>
+    <string name="popup2">Ingrese la nueva contraseña </string>
+
+
+    <string-array name="opsexo">
+        <item>Femenino</item>
+        <item>Masculino</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string-array name="opvacunacion">
+        <item>Ninguna</item>
+        <item>Pfizer</item>
+        <item>AstraZeneca</item>
+        <item>Sinovac</item>
+        <item>Cancino</item>
+        <item>Covaxin</item>
+        <item>Janssen</item>
+        <item>Moderna</item>
+        <item>Sinopharm</item>
+        <item>Abdala</item>
+    </string-array>
+
+    <string-array name="opvariante">
+        <item>No se</item>
+        <item>Alpha</item>
+        <item>Beta</item>
+        <item>Gama</item>
+        <item>Delta</item>
+        <item>Omicron</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string name="sin0">Registro de Sintomas </string>
+
+    <string name="sin1">Ninguno </string>
+    <string name="sin2">Fiebre o escalofrios </string>
+    <string name="sin3">Tos</string>
+    <string name="sin4">Dificultad para respirar</string>
+    <string name="sin5">Fatiga</string>
+    <string name="sin6">Dolores musculares</string>
+    <string name="sin7">Dolor de cabeza</string>
+    <string name="sin8">Perdida de olfato o el gusto</string>
+    <string name="sin9">Dolor de garganta</string>
+    <string name="sin10">Congestión o moqueo</string>
+    <string name="sin11">Nausas o vomito</string>
+    <string name="sin12">Diarrea</string>
+
+</resources>
