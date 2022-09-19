@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +51,8 @@ public class Cuestionariouno extends AppCompatActivity implements View.OnClickLi
     RadioButton rr1, rr2;
 
     //Date selector
-    Button guardar, btnfecha1;
+    Button guardar;
+    ImageButton btnfecha1;
     TextView txtFecha1;
     //Spinners
     Spinner opcionsexo, opvacuna1, opvacuna2, opvariante;
@@ -107,7 +109,7 @@ public class Cuestionariouno extends AppCompatActivity implements View.OnClickLi
         //Date selector
         setDate= (TextView) findViewById(R.id.reg_p7);
         txtFecha1= (TextView) findViewById(R.id.txt_fecha1);
-        btnfecha1= (Button)findViewById(R.id.btn_fecha1);
+        btnfecha1= findViewById(R.id.btn_fecha1);
         //Otros datos
         txtpeso= findViewById(R.id.txt_peso);
         txtedad=findViewById(R.id.txt_edad);
@@ -258,7 +260,7 @@ public class Cuestionariouno extends AppCompatActivity implements View.OnClickLi
             GuardarCuestionario(ID, IDsexo, IDvacuna, IDvacunar, IDvariante, Peso, Edad, Numdosis, fecha1, Movilidad);
         }
 
-        Intent principal = new Intent(this, Principal.class);
+        Intent principal = new Intent(this, Sintomasreg.class);
         startActivity(principal);
     }
 

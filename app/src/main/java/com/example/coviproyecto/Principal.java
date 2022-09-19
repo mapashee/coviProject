@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,6 @@ import java.util.Map;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Principal extends AppCompatActivity implements SintomasListener{
     TextView txtFechaact;
-    Date d = new Date(); CharSequence s = DateFormat.format("MMMM d, yyyy ", d.getTime());
     RecyclerView rv_sintomas;
     MultiAdapter adapter;
     @Override
@@ -50,7 +50,7 @@ public class Principal extends AppCompatActivity implements SintomasListener{
         txtFechaact= findViewById(R.id.txt_fechaact);
         rv_sintomas= findViewById(R.id.recycler_sintomas);
 
-        txtFechaact.setText(d.toString());
+        txtFechaact.setText(fechaRegistro());
         
         setRecyclerView();
         CargarPreferencias();
@@ -61,6 +61,18 @@ public class Principal extends AppCompatActivity implements SintomasListener{
         String ID= preferences.getString("ID", "NA");
         int tipo= preferences.getInt("Tipo", 3);
         return ID;
+    }
+
+    private String fechaRegistro(){
+        String FechaRegistro;
+        Time hoy= new Time(Time.getCurrentTimezone());
+        hoy.setToNow();
+        int dia= hoy.monthDay;
+        int mes= hoy.month;
+        int an= hoy.year;
+        mes=mes+1;
+        FechaRegistro= String.valueOf(an)+"-"+String.valueOf(mes)+"-"+String.valueOf(dia);
+        return FechaRegistro;
     }
 
     private ArrayList<String> getSintomas(int tipo){

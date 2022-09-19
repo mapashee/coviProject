@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //CargarPreferencias();
     }
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
             Intent prin = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                prin = new Intent(this, Principal.class);
+                prin = new Intent(this, Sintomasreg.class);
             }
             startActivity(prin);
         }

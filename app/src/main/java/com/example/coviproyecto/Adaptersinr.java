@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,18 +21,21 @@ public class Adaptersinr extends RecyclerView.Adapter<Adaptersinr.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adaptersinr.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        final int pos=position;
+        viewHolder.nombre.setText(Info.sintomasList.get(pos).getNombre());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return Info.sintomasList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView nombre;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            nombre= itemView.findViewById(R.id.rv_txtnsintoma);
         }
     }
 }

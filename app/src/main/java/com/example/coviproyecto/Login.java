@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
         String idd=preferences.getString("ID", "NA");
         if(!idd.equals("NA")){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startActivity(new Intent(getApplicationContext(), Principal.class));
+                startActivity(new Intent(getApplicationContext(), Sintomasreg.class));
             }
         }
     }
@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
                         GuardarPreferencias(id, tipo);
                         Toast.makeText(getApplicationContext(),id, Toast.LENGTH_SHORT).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            startActivity(new Intent(getApplicationContext(), Principal.class));
+                            startActivity(new Intent(getApplicationContext(), Sintomasreg.class));
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
@@ -118,7 +118,7 @@ public class Login extends AppCompatActivity {
 
     public void Registro(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startActivity(new Intent(getApplicationContext(), Principal.class));
+            startActivity(new Intent(getApplicationContext(), Sintomasreg.class));
         }
     }
 }
