@@ -75,6 +75,7 @@ public class Login extends AppCompatActivity {
         else{
             txtuser= et1.getText().toString().trim();
             txtpass= et2.getText().toString().trim();
+
             StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -109,7 +110,6 @@ public class Login extends AppCompatActivity {
                     return params;
                 }
             };
-
             RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
             requestQueue.add(request);
         }

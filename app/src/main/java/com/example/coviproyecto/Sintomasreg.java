@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -86,53 +87,16 @@ public class Sintomasreg extends AppCompatActivity {
 
     private void mostrarSintomas(){
         String IDuser= CargarPreferencias(), FechaRegistro= fechaRegistro(); ;
-        RequestQueue conect = Volley.newRequestQueue(this);
-        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+        StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
-                Toast.makeText(Sintomasreg.this, response.length(), Toast.LENGTH_SHORT).show();
-                Info.sintomasList.clear();
-
-                try {
-                    JSONArray jsonArray= response.getJSONArray("");
-                    Toast.makeText(Sintomasreg.this, jsonArray.length(), Toast.LENGTH_SHORT).show();
-
-                    for(int i=0; i<jsonArray.length(); i++){
-                        JSONObject jsonSintoma= jsonArray.getJSONObject(i);
-                        Sintoma sintoma= new Sintoma();
-                        sintoma.setID(jsonSintoma.getInt("ID"));
-                        sintoma.setDato1(jsonSintoma.getInt("0"));
-                        sintoma.setNombre(jsonSintoma.getString("Nombre"));
-                        sintoma.setDato2(jsonSintoma.getInt("1"));
-                        Toast.makeText(Sintomasreg.this, String.valueOf(sintoma.getID())+", "+ sintoma.getNombre(), Toast.LENGTH_SHORT).show();
-                        Info.sintomasList.add(sintoma);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                /*for (int i = 0; i < response.length(); i++) {
-                    try {
-                        Sintoma sintoma = new Sintoma();
-                        JSONObject jsonObject = response;
-
-                        //unpedido.setId(obj.getInt("ID_pedido"));
-                        sintoma.setID(jsonObject.getInt(("ID")));
-                        sintoma.setDato1(jsonObject.getInt((("0"))));
-                        sintoma.setNombre(jsonObject.getString("Nombre"));
-                        sintoma.setDato2(jsonObject.getInt(("1")));
-
-                        Info.sintomasList.add(sintoma);
-
-                    } catch (JSONException e) {
-                        Toast.makeText(Sintomasreg.this, e.toString(), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }*/
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Sintomasreg.this, "Error: "+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Nullable
@@ -144,7 +108,8 @@ public class Sintomasreg extends AppCompatActivity {
                 return params;
             }
         };
-        conect.add(peticion);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sintomasreg.this);
+        requestQueue.add(request);
     }
 
     public void registrarSintomas(View view) {
