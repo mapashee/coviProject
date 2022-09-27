@@ -1,14 +1,30 @@
 package com.example.coviproyecto;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,25 +38,201 @@ import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Estadistica extends AppCompatActivity {
     private BarChart barChart;
-    private String[] sintomas= new String[]{"Fiebre", "Tos", "Fatiga", "Dolor de cabeza", "Congestion o moqueo", "Nauseas vomito", "Diarrea"};
-    private int[] dias= new int[]{3,2,3,4,1,6,1};
-    private int[] color= new int[]{Color.CYAN, Color.YELLOW, Color.GREEN, Color.MAGENTA, Color.RED, Color.BLUE, Color.GRAY};
+    private String[] sintomas;
+    private int[] cuenta;
+    private int[] color= new int[]{Color.CYAN, Color.YELLOW, Color.GREEN, Color.RED, Color.BLUE, Color.MAGENTA, Color.GRAY, Color.LTGRAY, Color.BLACK, Color.DKGRAY, Color.CYAN, Color.YELLOW, Color.GREEN, Color.RED, Color.BLUE};
+
+    Spinner opciongraf;
+    TextView selecgraf;
+    int grafica;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadistica);
         barChart= (BarChart) findViewById(R.id.bar_chart);
-        createCharts();
+        opciongraf= findViewById(R.id.spin_grafica);
+        selecgraf=findViewById(R.id.txtgraf_s);
+        //createCharts();
+
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource
+                (this,R.array.opgrafica, android.R.layout.simple_spinner_item);
+        opciongraf.setAdapter(adapter);
+        opciongraf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int posicion, long id) {
+                selecgraf.setText(parent.getItemAtPosition(posicion).toString());
+                grafica=posicion+1;
+                switch (grafica){
+                    case 1:
+                        ObtenerXYgraf(1);
+                        break;
+                    case 2:
+                        ObtenerXYgraf(2);
+                        break;
+                    case 3:
+                        ObtenerXYgraf(3);
+                        break;
+                    case 4:
+                        ObtenerXYgraf(4);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
+
+    private String CargarPreferencias(){
+        SharedPreferences preferences= getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String ID= preferences.getString("ID", "NA");
+        int tipo= preferences.getInt("Tipo", 3);
+        return ID;
+    }
+
+    private void ObtenerXYgraf(int opcion){
+        String ID=CargarPreferencias();
+        String url="";
+        String urll="";
+        switch (opcion){
+            case 1:
+
+                break;
+            case 2:
+                url="http://coviapp.atwebpages.com/project/GraficaEjex.php";
+                urll= "http://coviapp.atwebpages.com/project/GraficaEjey.php";
+                datosX(url, ID, "1");
+                datosY(urll, ID, "1");
+                //Toast.makeText(getApplicationContext(), sintomas.toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    createCharts();
+                }catch (Exception ex){
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case 3:
+                url="http://coviapp.atwebpages.com/project/GraficaEjex.php";
+                urll= "http://coviapp.atwebpages.com/project/GraficaEjey.php";
+                datosX(url, ID, "2");
+                datosY(urll, ID, "2");
+                //Toast.makeText(getApplicationContext(), cuenta.toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    createCharts();
+                }catch (Exception ex){
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 4:
+                break;
+        }
+
+    }
+
+    private void datosX(String url, String IDuser, String opcion){
+        Toast.makeText(getApplicationContext(), IDuser+" "+opcion, Toast.LENGTH_SHORT).show();
+        StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), "Response: "+response, Toast.LENGTH_SHORT).show();
+                if(!response.isEmpty()) {
+                    String[] sin = response.split(",");
+                    sintomas= new String[sin.length-1];
+                    for (int i = 0; i < sin.length-1; i++) {
+                        sintomas[i]=sin[i];
+                        //Toast.makeText(getApplicationContext(), sintomas[i], Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Aun no hay sintomas registrados", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params= new HashMap<>();
+                params.put("IDuser", IDuser);
+                params.put("opcion", opcion);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Estadistica.this);
+        requestQueue.add(request);
+    }
+
+    private void datosY(String url, String IDuser, String opcion){
+        StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), "Response: "+response, Toast.LENGTH_SHORT).show();
+                if(!response.isEmpty()) {
+                    String[] sin = response.split(",");
+                    cuenta= new int[sin.length-1];
+                    for (int i = 0; i < sin.length-1; i++) {
+
+                        //Toast.makeText(getApplicationContext(), sin[i], Toast.LENGTH_SHORT).show();
+                        try {
+                            cuenta[i]= Integer.parseInt(sin[i].trim());
+                        }catch (Exception ex){
+                            Toast.makeText(getApplicationContext(), "Error"+ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        //Toast.makeText(getApplicationContext(), String.valueOf(cuenta[i]), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Aun no hay sintomas registrados", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params= new HashMap<>();
+                params.put("IDuser", IDuser);
+                params.put("opcion", opcion);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Estadistica.this);
+        requestQueue.add(request);
+    }
+
+    public  void createCharts(){
+        barChart= (BarChart)getSameChart(barChart, "",Color.BLACK, Color.WHITE,  3000);
+        barChart.setDrawBarShadow(true);
+        barChart.setDrawGridBackground(true);
+        barChart.setData(getBarData());
+        barChart.invalidate();
+        axisX(barChart.getXAxis());
+        axisLeft(barChart.getAxisLeft());
+        axisRight(barChart.getAxisRight());
+    }
+
     private Chart getSameChart(Chart chart, String description, int textColor, int background, int animateY){
         chart.getDescription().setText(description);
-        chart.getDescription().setTextSize(15);
+        chart.getDescription().setTextSize(10);
         chart.setBackgroundColor(background);
         chart.animateY(animateY);
-        legend(chart);
+        //legend(chart);
         return chart;
     }
 
@@ -52,16 +244,17 @@ public class Estadistica extends AppCompatActivity {
         ArrayList<LegendEntry> entries = new ArrayList<>();
         for(int i=0; i< sintomas.length; i++){
             LegendEntry entry=new LegendEntry();
-            entry.formColor= color[i];
+            entry.formColor= Color.CYAN;
             entry.label= sintomas[i];
+            entry.formSize= 5;
             entries.add(entry);
         }
         legend.setCustom(entries);
     }
     private  ArrayList<BarEntry> getBarEntries(){
         ArrayList<BarEntry> entries= new ArrayList<>();
-        for (int i=0; i< dias.length; i++){
-            entries.add(new BarEntry(i,dias[i]));
+        for (int i=0; i< cuenta.length; i++){
+            entries.add(new BarEntry(i,cuenta[i]));
         }
         return entries;
     }
@@ -80,16 +273,6 @@ public class Estadistica extends AppCompatActivity {
         axis.setEnabled(false);
     }
 
-    public  void createCharts(){
-        barChart= (BarChart)getSameChart(barChart, "Series",Color.BLACK, Color.WHITE,  3000);
-        barChart.setDrawBarShadow(true);
-        barChart.setDrawGridBackground(true);
-        barChart.setData(getBarData());
-        barChart.invalidate();
-        axisX(barChart.getXAxis());
-        axisLeft(barChart.getAxisLeft());
-        axisRight(barChart.getAxisRight());
-    }
     private DataSet getData(DataSet dataSet){
         dataSet.setColors(color);
         dataSet.setValueTextSize(Color.BLACK);
@@ -98,7 +281,7 @@ public class Estadistica extends AppCompatActivity {
     }
     private BarData getBarData(){
         BarDataSet barDataSet= (BarDataSet)getData(new BarDataSet(getBarEntries(),""));
-        barDataSet.setBarShadowColor(Color.GRAY);
+        barDataSet.setBarShadowColor(Color.WHITE);
         BarData barData= new BarData(barDataSet);
         barData.setBarWidth(0.45f);
         return barData;

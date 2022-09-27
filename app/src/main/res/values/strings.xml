@@ -65,6 +65,13 @@
         <item>Otro</item>
     </string-array>
 
+    <string-array name="opgrafica">
+        <item>Sintomas del mes actual</item>
+        <item>Sintomas del mes</item>
+        <item>Sintomas de los ultimos 3 meses</item>
+        <item>Todos los sintomas registrados</item>
+    </string-array>
+
     <string name="sin0">Registro de Sintomas </string>
 
     <string name="sin1">Ninguno </string>

@@ -9,15 +9,15 @@
         android:layout_height="wrap_content"
         android:text="@string/sin1"
         android:layout_marginRight="10dp"
-        android:padding="16dp"
+        android:layout_marginBottom="10dp"
         android:button="@android:color/transparent"
         android:drawableStart="@drawable/ic_sick"
         android:textAlignment="center"
         android:drawableTint="@color/sintoma_texticon_selector"
         android:background="@drawable/sintoma_background_selector"
         android:textColor="@color/sintoma_texticon_selector"
-        android:textSize="16dp"
-        android:layout_marginBottom="10dp"
+        android:textSize="11sp"
+
         />
 
 </LinearLayout>

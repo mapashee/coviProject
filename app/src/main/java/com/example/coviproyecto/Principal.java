@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,12 +45,15 @@ public class Principal extends AppCompatActivity implements SintomasListener{
     TextView txtFechaact;
     RecyclerView rv_sintomas;
     MultiAdapter adapter;
+    EditText txt_otro;
+    String url="http://";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         txtFechaact= findViewById(R.id.txt_fechaact);
         rv_sintomas= findViewById(R.id.recycler_sintomas);
+        txt_otro= findViewById(R.id.txt_sinextra);
 
         txtFechaact.setText(fechaRegistro());
         
@@ -120,22 +125,40 @@ public class Principal extends AppCompatActivity implements SintomasListener{
         SharedPreferences preferences= getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         int tipo= preferences.getInt("Tipo", 3);
         rv_sintomas.setHasFixedSize(true);
-        rv_sintomas.setLayoutManager(new LinearLayoutManager(this));
+        rv_sintomas.setLayoutManager(new GridLayoutManager(this, 2));
         adapter= new MultiAdapter(this, getSintomas(tipo), this);
         rv_sintomas.setAdapter(adapter);
 
     }
 
-    /*
-    for (int b=0; b<enfermedadList.size(); b++){
-                indexms2=discapacidadList.get(b).toString();
-                int ini= Integer.parseInt(indexms2)+1;
-                InsertMultiselectDis(String.valueOf(ini), ID);
-            }
-     */
-
     public void GuardarSintomas(View view) {
-        
+        String sinOtro= txt_otro.getText().toString().trim();
+        SharedPreferences preferences= getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String ID= preferences.getString("ID", "NA");
+        if(!sinOtro.isEmpty()){
+            // Insertar en la Base de datos
+
+            StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params= new HashMap<>();
+                    params.put("IDuser", ID);
+                    params.put("Otro", sinOtro);
+                    return params;
+                }
+            };
+        }
 
     }
 

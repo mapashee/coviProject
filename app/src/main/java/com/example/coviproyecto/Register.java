@@ -32,6 +32,7 @@ public class Register extends AppCompatActivity {
     String tuser, tpass, tipo, fecha1= "Fecha desde que sabe que tiene covid", fecha2="Fecha desde que sabe que ya no tiene covid", tpassconf;
     RadioButton r1, r2;
     boolean Cvodistatus= true;
+    boolean validUser=false;
 
     //SharedPreferences preferences= getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
 
@@ -112,11 +113,37 @@ if(!sharedPreferences.getString(NAME,"Default value").equals("Default value")){
         requestQueue.add(request);
     }
 
-    private boolean ValidarUser(String user){
-       boolean validacion=true;
-
-
-       return validacion;
+    private boolean ValidarUser(String User){
+        boolean val=false;
+       String urll="http://coviapp.atwebpages.com/project/VerificarUser.php";
+       StringRequest request= new StringRequest(Request.Method.POST, urll, new Response.Listener<String>() {
+           @Override
+           public void onResponse(String response) {
+               if(!response.contains("Username ya registrado")){
+                   validUser=true;
+               }
+               else{
+                   Toast.makeText(getApplicationContext(), "Ingrese otro nombre de usuario que no exista ya", Toast.LENGTH_SHORT).show();
+               }
+           }
+       }, new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+               Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+           }
+       }){
+           @Nullable
+           @Override
+           protected Map<String, String> getParams() throws AuthFailureError {
+               Map<String, String> params= new HashMap<>();
+               params.put("User", User);
+               return params;
+           }
+       };
+        RequestQueue requestQueue= Volley.newRequestQueue(Register.this);
+        requestQueue.add(request);
+        val=validUser;
+        return val;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -161,7 +188,7 @@ if(!sharedPreferences.getString(NAME,"Default value").equals("Default value")){
             tpassconf= passconf.getText().toString().trim();
             Toast.makeText(getApplicationContext(),tpass +" "+ tpassconf, Toast.LENGTH_SHORT).show();
             if(tpass.equals(tpassconf)) {
-                if((ValidarPass(tpass)) && (ValidarUser(tuser))){
+                if((ValidarPass(tpass)) && ValidarUser(tuser)){
                     if(r1.isChecked()){
                         tipo="1";
                         Toast.makeText(getApplicationContext(),tipo.toString(), Toast.LENGTH_SHORT).show();

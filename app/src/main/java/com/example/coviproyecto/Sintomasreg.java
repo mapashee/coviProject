@@ -1,5 +1,6 @@
 package com.example.coviproyecto;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,16 +47,21 @@ public class Sintomasreg extends AppCompatActivity {
         setContentView(R.layout.activity_sintomasreg);
         Sintomasreg= findViewById(R.id.rv_sintomasreg);
         fecha = findViewById(R.id.txt_sfactual);
-
         fecha.setText(fechaAcct());
         mostrarSintomas();
 
+    }
+
+    private void configRecycler(){
+        //Toast.makeText(getApplicationContext(),Info.sintomasList.size(), Toast.LENGTH_SHORT).show();
+        Sintomasreg.setHasFixedSize(true);
         Adaptersinr adaptersinr= new Adaptersinr();
         adaptersinr.context=this;
         LinearLayoutManager llm= new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         Sintomasreg.setLayoutManager(llm);
         Sintomasreg.setAdapter(adaptersinr);
     }
+
     private String CargarPreferencias(){
         SharedPreferences preferences= getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String ID= preferences.getString("ID", "NA");
@@ -86,12 +94,28 @@ public class Sintomasreg extends AppCompatActivity {
     }
 
     private void mostrarSintomas(){
-        String IDuser= CargarPreferencias(), FechaRegistro= fechaRegistro(); ;
+        String IDuser= CargarPreferencias(), FechaRegistro= fechaRegistro();
 
         StringRequest request= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                if(!response.isEmpty()) {
+                    Info.sintomasList.clear();
+
+                    String[] sintomas = response.split(",");
+                    for (int i = 0; i < sintomas.length; i++) {
+
+                        Info.sintomasList.add(sintomas[i]);
+                    }
+                    //Toast.makeText(getApplicationContext(), String.valueOf(sintomas.length), Toast.LENGTH_SHORT).show();
+                    Info.sintomasList.remove(sintomas[sintomas.length-1]);
+                    //Toast.makeText(getApplicationContext(), String.valueOf(Info.sintomasList.size()), Toast.LENGTH_SHORT).show();
+                    configRecycler();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Aun no hay sintomas registrados", Toast.LENGTH_SHORT).show();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -116,5 +140,35 @@ public class Sintomasreg extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startActivity(new Intent(getApplicationContext(), Principal.class));
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.estadistica:
+                Intent cambio3 = new Intent(this, Estadistica.class);
+                startActivity(cambio3);
+                return true;
+
+            case R.id.sesion:
+                Intent cambio1 = new Intent(this, MainActivity.class);
+                startActivity(cambio1);
+                return true;
+            case R.id.cuenta:
+                Intent cambio2 = new Intent(this, Configuracion.class);
+                startActivity(cambio2);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
